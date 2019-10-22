@@ -25,7 +25,7 @@
 	}
 	
 	// Query to check if the email already exist
-	$checkEmail = "SELECT * FROM users WHERE Email = '$_POST[email]' ";
+	$checkEmail = "SELECT * FROM Administradores WHERE email = '$_POST[email]' ";
 
 	// Variable $result hold the connection data and the query
 	$result = $conn-> query($checkEmail);
@@ -36,8 +36,8 @@
 	// If count == 1 that means the email is already on the database
 	if ($count == 1) {
 	echo "<div class='alert alert-warning mt-4' role='alert'>
-					<p>That email is already in our database.</p>
-					<p><a href='login.html'>Please login here</a></p>
+					<p>Ese email ya fue utilizado.</p>
+					<p><a href='login.html'>Iniciar sesión</a></p>
 				</div>";
 	} else {	
 	
@@ -53,11 +53,11 @@
 	$passHash = password_hash($pass, PASSWORD_DEFAULT);
 	
 	// Query to send Name, Email and Password hash to the database
-	$query = "INSERT INTO users (Name, Email, Password) VALUES ('$name', '$email', '$passHash')";
+	$query = "INSERT INTO Administradores (nombre, email, password) VALUES ('$name', '$email', '$passHash')";
 
 	if (mysqli_query($conn, $query)) {
-		echo "<div class='alert alert-success mt-4' role='alert'><h3>Your account has been created.</h3>
-		<a class='btn btn-outline-primary' href='login.html' role='button'>Login</a></div>";		
+		echo "<div class='alert alert-success mt-4' role='alert'><h3>Cuenta de administrador creada.</h3>
+		<a class='btn btn-outline-primary' href='login.html' role='button'>Iniciar sesión</a></div>";		
 		} else {
 			echo "Error: " . $query . "<br>" . mysqli_error($conn);
 		}	
