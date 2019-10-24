@@ -21,7 +21,7 @@
 							<img src="images/php-mysql-logo.png" class="img-responsive" alt="PHP MySQL logos">
 							<h2>Inicio de sesión</h2>
 
-							<form action="check-login.php" method="post">                           	
+							<form action="controllers/check-login.php" method="post">                           	
 								<div class="form-group">									
 									<input type="email" class="form-control input-lg" name="email" placeholder="Email" required>        
 								</div>							
@@ -34,7 +34,7 @@
 							<p><a href="#showForm" data-toggle="collapse" aria-expanded="false" aria-controls="collapse">Olvidaste contraseña?</a></p>	
 							<div class="collapse" id="showForm">
 								<div class='well'>
-									<form action="password-recovery.php" method="post">
+									<form action="controllers/password-recovery.php" method="post">
 										<div class="form-group">										
 											<input type="email" class="form-control" name="email" placeholder="Enter the email associated with the password." required>
 										</div>
@@ -43,7 +43,7 @@
 								</div>
 							</div>
 													
-							<hr><p>Nuevo? <a href="registrousuarios.php" title="Create an account">Crear cuenta</a>.</p>								
+							<hr><p>Nuevo? <a href="controllers/registrousuarios.php" title="Create an account">Crear cuenta</a>.</p>								
 						</div><!-- /.loginBox -->	
 					</div><!-- /.card -->
 				</div><!-- /.col -->

@@ -1,54 +1,64 @@
 <?php
 class mySQL{
-        var $host;
-        var $user;
-        var $pass;
-        var $base;
-        public $dbc;
+	var $host;
+	var $user;
+    var $pass;
+    var $base;
+    public $dbc;
 
-        public function conectar(){
-                $this->host='localhost';
-                $this->user='root';
-                $this->pass='1220';
-                $this->base='Base1';
-                $this->dbc=mysqli_connect($this->host,$this->user,$this->pass,$this->base) or die('Error en la  conetzion \n');
-                $acentos=$this->query("SET NAMES 'utf8'");
-                }
+    public function conectar(){
+    	$this->host='localhost';
+        $this->user='root';
+        $this->pass='1220';
+        $this->base='Base1';
+        $this->dbc=mysqli_connect($this->host,$this->user,$this->pass,$this->base) or die('Error en la  conetzion \n');
+        $acentos=$this->query("SET NAMES 'utf8'");
+        }
 
-        public function query($sql){
-                $result=mysqli_query($this->dbc,$sql) or die('error en la consulta'.mysqli_error($this->dbc));
-                return $result;
-                }
-        public function query_count($table,$condition){
-                $sql="select count(*) as numr  from ".$table." ".$condition;
-                $result =  $this->query($sql);
-                $row=mysqli_fetch_array($result);
-                return $row['numr'];
-                }
+	public function desconectar(){ 
+		mysqli_close($this->dbc);
+		}
+
+    public function query($sql){
+    	$result=mysqli_query($this->dbc,$sql) or die('error en la consulta'.mysqli_error($this->dbc));
+        return $result;
+        }
+
+	public function query_count($table,$condition){
+    	$sql="select count(*) as numr  from ".$table." ".$condition;
+        $result =  $this->query($sql);
+        $row=mysqli_fetch_array($result);
+        return $row['numr'];
+        }
 
 	public function notlogged(){
 		echo "<div class='alert alert-danger mt-4' role='alert'>
         	<h4>No has iniciado sesión.</h4>
-        	<p><a href='index.html'>Inicia sesión!</a></p></div>";
+        	<p><a href='../index.html'>Inicia sesión!</a></p></div>";
         	exit;
 		}
 
 	public function checklogged($sesion,$permiso){
-		if(!isset($sesion['loggedin'])){ $this->notlogged(); }
+		if(!isset($sesion['loggedin'])){
+			$this->desconectar();
+			$this->notlogged();
+			}
 		else{
 			$now=time();
 			if($now > $sesion['expire']){
+				$this->desconectar();
 				session_destroy();
 		        echo "<div class='alert alert-danger mt-4' role='alert'>
 		        <h4>Tu sesión expiró!</h4>
-    		    <p><a href='index.html'>Inicia Sesión</a></p></div>";
+    		    <p><a href='../index.html'>Inicia Sesión</a></p></div>";
         		exit;
 				}
 			if($sesion['permiso']>$permiso){
+				$this->desconectar();
 				echo "<div class='alert alert-danger mt-4' role='alert'>
 	            <h4>No tienes permiso para esta página.</h4>
-    	        <p><a href='inicio.php'>Inicio</a></p>
-    	        <p><a href='index.html'>Inicia sesión!</a></p>
+    	        <p><a href='../views/inicio.php'>Inicio</a></p>
+    	        <p><a href='../index.html'>Inicia sesión!</a></p>
 				</div>";
     	        exit;
 				}

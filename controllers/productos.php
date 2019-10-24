@@ -1,7 +1,7 @@
 <html>
 <h1>Productos</h1>
 <?php
-require_once('conexion.php');
+require_once('../db/conexion.php');
 $conexion = new mySQL();
 $conexion->conectar();
 session_start();

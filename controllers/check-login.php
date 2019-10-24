@@ -1,5 +1,5 @@
 <?php
-require_once('conexion.php');
+require_once('../db/conexion.php');
 $conexion = new mySQL();
 $conexion->conectar();
 session_start();
@@ -17,16 +17,19 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 		$_SESSION['expire'] = $_SESSION['start'] + (20 * 60);
 		$_SESSION['permiso'] = $type;
 		$_SESSION['email']=$email;
-		header('Location: inicio.php');
+		$conexion->desconectar();
+		header('Location: ../views/inicio.php');
 		exit();
 		}
 	else{
+		$conexion->desconectar();
 		echo "<div class='alert alert-danger mt-4' role='alert'>Email o contraseña incorrectos!!
-                <p><a href='login.html'><strong>iniciar sesión</strong></a></p></div>";
+                <p><a href='../index.html'><strong>iniciar sesión</strong></a></p></div>";
 		}
 	}
 else{
-	header('Location: inicio.php');
+	$conexion->desconectar();
+	header('Location: ../views/inicio.php');
 	exit();
 	}
 ?>
