@@ -10,8 +10,15 @@
 			if(isset($mensaje)){
 				switch($mensaje){
 					case 0:
-						echo "<h3>Registro exitoso!</h3><br>";
-						break;
+						if(isset($_SESSION['loggedin']) && $_SESSION['permiso']==0){
+							header('Location: usuarios.php');
+							exit;
+							break;
+							}
+						else{
+							echo "<h3>Registro exitoso!</h3><br>";
+							break;
+							}
 					case 1:
 						echo "<h3>Usuario registrado!</h3><br> $formulario";
 						break;
@@ -26,10 +33,10 @@
 			else{ echo $formulario; }
 			if(isset($_SESSION['permiso']) && $_SESSION['permiso']==0){echo "<a href=\"usuarios.php\">Ir a pagina de usuarios</a><br>";}
 			if(isset($_SESSION['loggedin'])){
-    			echo "<a href='inicio.php'> Inicio </a><br>";
+    			echo "<a href='../views/inicio.php'> Inicio </a><br>";
     			echo "<a href=\"logout.php\">cerrar sesión</a>";
     			}
+			else{ echo "<a href='../index.html'>Iniciar sesión</a>"; }
 		?>
-		<a href='../index.html'>Iniciar sesión</a> <br>
 	</body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-require_once('conexion.php');
+require_once('../db/conexion.php');
 $conexion = new mySQL();
 $conexion->conectar();
 if(isset($_POST['opcion'])){
@@ -8,4 +8,5 @@ if(isset($_POST['opcion'])){
 	header('Location: usuarios.php');
     exit;
 	}
+$conexion->desconectar();
 ?> 

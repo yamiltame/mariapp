@@ -14,7 +14,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 		$_SESSION['loggedin'] = true;
 		$_SESSION['nombre'] = $row['nombre'];
 		$_SESSION['start'] = time();
-		$_SESSION['expire'] = $_SESSION['start'] + (20 * 60);
+		$_SESSION['expire'] = $_SESSION['start'] + (60 * 60);
 		$_SESSION['permiso'] = $type;
 		$_SESSION['email']=$email;
 		$conexion->desconectar();

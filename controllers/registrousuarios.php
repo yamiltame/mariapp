@@ -18,4 +18,5 @@ if(isset($_POST['email']) && isset($_POST['nombre']) && isset($_POST['pas']) && 
 	}
 
 require_once('../views/registrousuarios_view.php');
+
 ?>

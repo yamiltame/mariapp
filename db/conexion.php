@@ -74,9 +74,9 @@ class mySQL{
                 for($i=0;$i<sizeof($pseudonimos);$i++){
                         $tabla.="<th>".$pseudonimos[$i]."</th>";
                         }
-		for($i=0;$i<sizeof($campos);$i++){
+				for($i=0;$i<sizeof($campos);$i++){
                         $sql.=$campos[$i].",";
-			}
+						}
                 $sql.="'' from ".$nombre." ".$condicion;
                 echo $sql."<br>";
                 $result=$this->query($sql);
@@ -92,7 +92,7 @@ class mySQL{
                 }
 
         public function make_link($file,$text,$opc){
-                $link="<form action='".$file."' method=post><input type=hidden name=opcion value='".$opc."'><input type=submit value='".$text."'></form>";
+                $link="<form id='link_$opc' action='".$file."' method=post><input type=hidden name=opcion form='link_$opc' value='".$opc."'><input type=submit form='link_$opc' value='".$text."'></form>";
                 return $link;
                 }
 

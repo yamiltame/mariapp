@@ -1,5 +1,5 @@
 <?php
-	function tabla_usuarios($conexion){
+	function tabla_usuarios($conexion,$condicion){
 		$sql="select * from Usuarios";
 		$result=$conexion->query($sql);
 		$campos= array("id","nombre","email","permiso");
@@ -9,19 +9,23 @@
 		$tabla.="</tr>";
 		foreach ($campos as $c){ $sql.=$c.",";}
 		foreach ($titulos as $t){ $tabla.="<th>".$t."</th>";}
-		$sql.="'' from Usuarios";
+		$sql.="'' from Usuarios ".$condicion;
 		$result=$conexion->query($sql);
 		while($row=mysqli_fetch_array($result)){
         		$tabla.="<tr>";
         		$tabla.="<td>".$row['nombre']."</td>"."<td>".$row['email']."</td>";
         		if($row['permiso']==0){ $tabla.="<td>Administrador</td>";}
         		else if($row['permiso']==1){ $tabla.="<td>Ver y Comprar </td>";}
-        		else{ $tabla.="<td>Sólo ver".$conexion->make_link('aceptarusuario.php','Aceptar',$row['id'])."</td>";}
+        		else{
+					$tabla.="<td>Sólo ver <form action='aceptarusuario.php' method='post'><input type='hidden' name='opcion' value=".$row['id'].">
+						<input type='submit' value='aceptar'></form></td>";
+					}
         		$tabla.="<td>".$conexion->make_link("editarusuario.php","Editar",$row['id'])."</td></tr>";
     		}
 		$tabla.="</table><br>";
 		return $tabla;
 		}
+
 
 	function formulario_registro_usuario($permiso){
 		if($permiso==0){
