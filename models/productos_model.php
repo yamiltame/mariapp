@@ -1,8 +1,6 @@
 <?php
 
-	function tabla_productos($conexion){
-		$sql="select * from Productos";
-		$result=$conexion->query($sql);
+	function tabla_productos($conexion,$condicion){
 		$campos= array("id","descripcion","precio","categoria");
 		$titulos= array("Seleccionar","Descripcion","Precio","Categoria","---");
 		$tabla="<form id='multiples' action='editarproducto.php' method=post><input type='hidden' name='multiple' form='multiples' value=0></form><table border><tr>";
@@ -10,7 +8,7 @@
 		$tabla.="</tr>";
 		foreach ($campos as $c){ $sql.=$c.",";}
 		foreach ($titulos as $t){ $tabla.="<th>".$t."</th>";}
-		$sql.="'' from Productos";
+		$sql.="'' from Productos ".$condicion;
 		$result=$conexion->query($sql);
 		while($row=mysqli_fetch_array($result)){
     		    $tabla.="<tr>";

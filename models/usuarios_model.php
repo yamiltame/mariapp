@@ -1,7 +1,5 @@
 <?php
 	function tabla_usuarios($conexion,$condicion){
-		$sql="select * from Usuarios";
-		$result=$conexion->query($sql);
 		$campos= array("id","nombre","email","permiso");
 		$titulos= array("Nombre","Email","Permiso","---");
 		$tabla="<table border><tr>";

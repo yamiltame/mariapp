@@ -6,7 +6,14 @@
 	</head>
 	<body>
 		<h1>Productos</h1>
-		<?php echo $tabla_productos; ?>
+        <div>
+            <form action='productos.php' method='post'>
+                <input type=text name='buscar' placeholder='buscar...'>
+                <input type=submit value='Buscar'>
+            </form>
+        </div>
+		<?php echo $tabla; ?>
+        <div><?php echo $empaginamiento; ?></div>
 		<a href='../views/inicio.php'>Inicio</a> <br>
 		<a href='../controllers/registroproductos.php'>Registrar nuevo producto</a> <br>
 	</body>
