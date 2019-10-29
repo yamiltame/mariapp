@@ -1,26 +1,37 @@
 <?php
-	function tabla_usuarios($conexion,$condicion){
+	function tabla_usuarios($conexion,$condicion,$orden,$last,$usertype,$pag){
 		$campos= array("id","nombre","email","permiso");
-		$titulos= array("Nombre","Email","Permiso","---");
-		$tabla="<table border><tr>";
+		$titulos= array("select","Nombre","Email","Permiso","");
+        $tabla="<form id='multiples' action='editarusuario.php' method=post><input type='hidden' name='multiple' form='multiples' value=0></form><table border><tr>";
+		$tabla.="<td>select</td>";
 		$sql="select ";
-		$tabla.="</tr>";
 		foreach ($campos as $c){ $sql.=$c.",";}
-		foreach ($titulos as $t){ $tabla.="<th>".$t."</th>";}
+		foreach ($titulos as $t){
+			if($t!="" && $t!="select"){
+				if($last==0){
+					$tabla.="<th><a href='?orden=$t&last=1&usertype=$usertype'>".$t."</a></th>";
+					}
+				else{
+					$tabla.="<th><a href='?orden=$t&last=0&usertype=$usertype'>".$t."</a></th>";
+					}
+				}
+			}
+		$tabla.="</tr>";
 		$sql.="'' from Usuarios ".$condicion;
 		$result=$conexion->query($sql);
 		while($row=mysqli_fetch_array($result)){
         		$tabla.="<tr>";
-        		$tabla.="<td>".$row['nombre']."</td>"."<td>".$row['email']."</td>";
+        		$tabla.="<td><input type='checkbox' name='".$row['id']."' form='multiples' value=".$row['id']."></td><td>".$row['nombre']."</td>"."<td>".$row['email']."</td>";
         		if($row['permiso']==0){ $tabla.="<td>Administrador</td>";}
         		else if($row['permiso']==1){ $tabla.="<td>Ver y Comprar </td>";}
         		else{
-					$tabla.="<td>Sólo ver <form action='aceptarusuario.php' method='post'><input type='hidden' name='opcion' value=".$row['id'].">
+					$tabla.="<td>Sólo ver <form action='aceptarusuario.php?pag=$pag&orden=$orden&last=$last&usertype=$usertype' method='post'><input type='hidden' name='opcion' value=".$row['id'].">
 						<input type='submit' value='aceptar'></form></td>";
 					}
         		$tabla.="<td>".$conexion->make_link("editarusuario.php","Editar",$row['id'])."</td></tr>";
     		}
 		$tabla.="</table><br>";
+        $tabla.="<input type='submit' form='multiples' value='Editar selección'></table><br>";
 		return $tabla;
 		}
 
@@ -117,4 +128,49 @@
 		$formulario.="<form action='editarusuario.php' method=post><input type=hidden name=borrar value=$id><input type='submit' value='borrar'></form>";
 		return $formulario;
 		}
+
+    function get_ids($post,&$IDS){
+        foreach($post as $P => $i){
+            if(is_numeric($P)){
+                $IDS[]=$i;
+                }
+            }
+        }
+
+    function formulario_multiples_usuarios($IDS){
+        $formulario="Editar usuarios <br><form action='editarusuario.php' method='post'>";
+        foreach($IDS as $id){
+            $formulario.="<input type='hidden' name=$id value=$id>";
+            }
+        $formulario.="<input type='hidden' name='multiple' value=1>";
+        $formulario.="Permiso:<br><select name='permiso'><option value=0>Administrador</option><option value=1>Ver y Comprar</option><option value=2>Sólo ver</option><br><input type='submit' value='editar'></form>";
+        $formulario.="<form action='editarusuario.php' method='post'>";
+        foreach($IDS as $id){
+            $formulario.="<input type='hidden' name=$id value=$id>";
+            }
+        $formulario.="<input type='hidden' name='multiple' value=2><input type='submit' value='borrar'></form>";
+        return $formulario;
+        }
+
+    function editar_seleccion($conexion,$IDS){
+        $sql="update Usuarios set permiso='".$_POST['permiso']."' where id in (";
+        if(is_array($IDS)){
+            foreach($IDS as $i){ $sql.="$i,"; }
+            $sql.="0)";
+            }
+        else{ $sql.="$IDS)"; }
+        $conexion->query($sql);
+        }
+
+    function borrar_seleccion($conexion,$IDS){
+        $sql="delete from Usuarios where id in (";
+        if(is_array($IDS)){
+            foreach($IDS as $i){ echo $i."<br>"; $sql.="$i,"; }
+            $sql.="0)";
+            }
+        else{ $sql.="$IDS)"; }
+        echo $sql."<br>";
+        $conexion->query($sql);
+        }
+
 ?>

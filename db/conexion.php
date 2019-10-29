@@ -15,11 +15,12 @@ class mySQL{
         $acentos=$this->query("SET NAMES 'utf8'");
         }
 
-	public function desconectar(){ 
+	public function desconectar(){
 		mysqli_close($this->dbc);
 		}
 
     public function query($sql){
+//		echo $sql."<br>";
     	$result=mysqli_query($this->dbc,$sql) or die('error en la consulta'.mysqli_error($this->dbc));
         return $result;
         }
@@ -34,7 +35,7 @@ class mySQL{
 	public function notlogged(){
 		echo "<div class='alert alert-danger mt-4' role='alert'>
         	<h4>No has iniciado sesión.</h4>
-        	<p><a href='../index.html'>Inicia sesión!</a></p></div>";
+        	<p><a href='../index.php'>Inicia sesión!</a></p></div>";
         	exit;
 		}
 
@@ -50,7 +51,7 @@ class mySQL{
 				session_destroy();
 		        echo "<div class='alert alert-danger mt-4' role='alert'>
 		        <h4>Tu sesión expiró!</h4>
-    		    <p><a href='../index.html'>Inicia Sesión</a></p></div>";
+    		    <p><a href='../index.php'>Inicia Sesión</a></p></div>";
         		exit;
 				}
 			if($sesion['permiso']>$permiso){
@@ -58,7 +59,7 @@ class mySQL{
 				echo "<div class='alert alert-danger mt-4' role='alert'>
 	            <h4>No tienes permiso para esta página.</h4>
     	        <p><a href='../views/inicio.php'>Inicio</a></p>
-    	        <p><a href='../index.html'>Inicia sesión!</a></p>
+    	        <p>Si eres admin <a href='../index.php'>Inicia sesión!</a></p>
 				</div>";
     	        exit;
 				}

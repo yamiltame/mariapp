@@ -21,7 +21,7 @@
 			else{ echo $formulario;}
 			if(isset($_SESSION['permiso']) && $_SESSION['permiso']==0){echo "<a href=\"productos.php\">Productos</a><br>";}
 			if(isset($_SESSION['loggedin'])){
-    			echo "<a href='inicio.php'> Inicio </a><br>";
+    			echo "<a href='../views/inicio.php'> Inicio </a><br>";
     			echo "<a href=\"logout.php\">cerrar sesión</a>";
     			}
 		?>

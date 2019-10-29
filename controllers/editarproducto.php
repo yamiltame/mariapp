@@ -7,7 +7,6 @@ $conexion->checklogged($_SESSION,0);
 $IDS=array();
 require_once('../models/productos_model.php');
 
-
 if(isset($_POST['multiple'])){
 	get_ids($_POST,$IDS);
 	if($_POST['multiple']==0){
