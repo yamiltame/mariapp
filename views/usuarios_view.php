@@ -19,6 +19,7 @@
 			<td> <form action='usuarios.php' method='post'><input type=hidden name='usertype' value=2><input type=submit value='Solicitantes'></form></td>
 			<td> <form action='usuarios.php' method='post'><input type=submit value='Todos'></form></td>
 		</tr></table></div>
+		<?php echo $busqueda; ?>
 		<div><?php echo $tabla; ?></div>
 		<div><?php echo $empaginamiento; ?></div>
 		<a href='../views/inicio.php'>Inicio</a> <br>

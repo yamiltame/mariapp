@@ -18,18 +18,18 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 		$_SESSION['permiso'] = $type;
 		$_SESSION['email']=$email;
 		$conexion->desconectar();
-		header('Location: ../views/inicio.php');
+		header('Location: ../controllers/inicio.php');
 		exit();
 		}
 	else{
 		$conexion->desconectar();
 		echo "<div class='alert alert-danger mt-4' role='alert'>Email o contraseña incorrectos!!
-                <p><a href='../index.html'><strong>iniciar sesión</strong></a></p></div>";
+                <p><a href='../index.php'><strong>iniciar sesión</strong></a></p></div>";
 		}
 	}
 else{
 	$conexion->desconectar();
-	header('Location: ../views/inicio.php');
+	header('Location: ../controllers/inicio.php');
 	exit();
 	}
 ?>

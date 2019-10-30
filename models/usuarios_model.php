@@ -1,5 +1,5 @@
 <?php
-	function tabla_usuarios($conexion,$condicion,$orden,$last,$usertype,$pag){
+	function tabla_usuarios($conexion,$condicion,$orden,$last,$usertype,$pag,$buscar){
 		$campos= array("id","nombre","email","permiso");
 		$titulos= array("select","Nombre","Email","Permiso","");
         $tabla="<form id='multiples' action='editarusuario.php' method=post><input type='hidden' name='multiple' form='multiples' value=0></form><table border><tr>";
@@ -9,10 +9,10 @@
 		foreach ($titulos as $t){
 			if($t!="" && $t!="select"){
 				if($last==0){
-					$tabla.="<th><a href='?orden=$t&last=1&usertype=$usertype'>".$t."</a></th>";
+					$tabla.="<th><a href='?orden=$t&last=1&usertype=$usertype&buscar=$buscar'>".$t."</a></th>";
 					}
 				else{
-					$tabla.="<th><a href='?orden=$t&last=0&usertype=$usertype'>".$t."</a></th>";
+					$tabla.="<th><a href='?orden=$t&last=0&usertype=$usertype&buscar=$buscar'>".$t."</a></th>";
 					}
 				}
 			}
@@ -171,6 +171,29 @@
         else{ $sql.="$IDS)"; }
         echo $sql."<br>";
         $conexion->query($sql);
+        }
+
+    function empaginamiento_usuarios($conexion,$sql,$compag,$cantidadmostrar,$extras){
+        $line="";
+        //la variable extras debe ser un array con las claves para los parametros...
+        foreach ($extras as $clave => $valor){
+            $line.=$clave."=".$valor."&";
+            }
+        $registros=$conexion->query($sql);
+        $paginas=ceil($registros->num_rows/$cantidadmostrar);
+        $increment=(($compag +1) <= $paginas) ? ($compag +1): $paginas;
+        $decrement=(($compag -1) < 1) ? 1: ($compag-1);
+        $desde=$compag - 4;
+        $hasta=$compag +5;
+        $desde=($desde<1)? 1 : $desde;
+        $hasta=($hasta>$paginas)? $paginas : $hasta;
+        $empaginamiento="<ul><a href='?pag=$decrement&$line'>atrás</a>";
+        for($i=$desde;$i<=$hasta;$i++){
+            if($i==$compag){ $empaginamiento.="<a href='?pag=$i&$line'><b>($i)</b></a>";}
+            else{ $empaginamiento.="<a href='?pag=$i&$line'>($i)</a>";}
+            }
+        $empaginamiento.="<a href='?pag=$increment&$line'>Siguiente</a></ul>";
+        return $empaginamiento;
         }
 
 ?>

@@ -14,12 +14,14 @@ if(isset($_POST['multiple'])){
     else if($_POST['multiple']==1){
         //multiple=1, hacer la edicion
         editar_seleccion($conexion,$IDS);
+		$conexion->desconectar();
         header('Location: usuarios.php');
         exit;
         }
     else{
         echo $_POST['multiple']."<br>";
         borrar_seleccion($conexion,$IDS);
+		$conexion->desconectar();
         header('Location: usuarios.php');
         exit;
         //multiples=2 borrar
@@ -36,6 +38,7 @@ else{
 if(isset($_POST['borrar'])){
 	$sql="delete from Usuarios where id=".$_POST['borrar'];
 	$conexion->query($sql);
+	$conexion->desconectar();
 	header('Location: ../controllers/usuarios.php');
     exit;
 	}
@@ -43,10 +46,11 @@ if(isset($_POST['borrar'])){
 else if(isset($_POST['id'])){
 	$sql="update Usuarios set nombre='".$_POST['nombre']."', email='".$_POST['email']."', permiso=".$_POST['permiso']." where id=".$_POST['id'];
 	$conexion->query($sql);
+	$conexion->desconectar();
 	header('Location: ../controllers/usuarios.php');
     exit;
 	}
 
 require_once('../views/editarusuario_view.php');
-
+$conexion->desconectar();
 ?>
