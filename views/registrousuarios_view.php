@@ -33,10 +33,10 @@
 			else{ echo $formulario; }
 			if(isset($_SESSION['permiso']) && $_SESSION['permiso']==0){echo "<a href=\"usuarios.php\">Ir a pagina de usuarios</a><br>";}
 			if(isset($_SESSION['loggedin'])){
-    			echo "<a href='../views/inicio.php'> Inicio </a><br>";
-    			echo "<a href=\"logout.php\">cerrar sesión</a>";
+    			echo "<a href='inicio.php'> Inicio </a><br>";
+    			echo "<a href='logout.php'>cerrar sesión</a>";
     			}
-			else{ echo "<a href='../index.html'>Iniciar sesión</a>"; }
+			else{ echo "<a href='../index.php'>Iniciar sesión</a>"; }
 		?>
 	</body>
 </html>

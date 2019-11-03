@@ -22,7 +22,7 @@
 		<?php echo $busqueda; ?>
 		<div><?php echo $tabla; ?></div>
 		<div><?php echo $empaginamiento; ?></div>
-		<a href='../views/inicio.php'>Inicio</a> <br>
+		<a href='inicio.php'>Inicio</a> <br>
 		<a href='../controllers/registrousuarios.php'>Registrar nuevo usuario</a> <br>
 		<a href='../controllers/logout.php'>Cerrar sesión</a> <br>
 	</body>
