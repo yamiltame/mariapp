@@ -10,7 +10,7 @@ class mySQL{
     	$this->host='localhost';
         $this->user='root';
         $this->pass='1220';
-        $this->base='Base1';
+        $this->base='Betha';
         $this->dbc=mysqli_connect($this->host,$this->user,$this->pass,$this->base) or die('Error en la  conetzion \n');
         $acentos=$this->query("SET NAMES 'utf8'");
         }
