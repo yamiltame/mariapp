@@ -43,7 +43,7 @@
 								</div>
 							</div>
 													
-							<hr><p>Nuevo? <a href="controllers/registrousuarios.php" title="Create an account">Crear cuenta</a>.</p>								
+							<hr><p>Nueviyo? <a href="controllers/registrousuarios.php" title="Create an account">Crear cuenta</a>.</p>								
 						</div><!-- /.loginBox -->	
 					</div><!-- /.card -->
 				</div><!-- /.col -->
